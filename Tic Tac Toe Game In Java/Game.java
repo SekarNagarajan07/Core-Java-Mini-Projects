@@ -33,25 +33,39 @@ class TicTacToe {
     }
     boolean checkColWin(){
       for (int j = 0;j<=2;j++){
-          if(board[0][j] == board[1][j]&&
+          if(board[0][j] != ' ' && board[0][j] == board[1][j]&&
                   board[1][j] == board[2][j]){
               return true;
           }
       }
       return false;
     }
+
+    boolean checkRowWin(){
+        for (int i = 0;i<=2;i++){
+            if(board[i][0] != ' ' && board[i][0] == board[i][1] &&
+            board[i][1]==board[i][2]){
+                return true;
+            }
+        }
+        return false;
+    }
+    boolean checkDiagWin(){
+        if(board[0][0] == board[1][1] &&
+                board[1][1] == board[2][2] ||
+                board[0][2] == board[1][1] &&
+                        board[1][1] == board[2][0]){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 }
 class Game {
     public static void main(String[] args) {
         TicTacToe t = new TicTacToe();
         t.displayBoard();
-        t.placeMark(0,0,'X');
-        t.placeMark(0,1,'O');
-        t.placeMark(2,2,'X');
-        t.placeMark(1,1,'O');
-        t.placeMark(0,2,'X');
-        t.placeMark(2,1,'O');
-        t.displayBoard();
-        System.out.println(t.checkColWin());
+
     }
 }
