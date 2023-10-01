@@ -148,7 +148,7 @@ class Game {
                 System.out.println(cp.name + " has won");
                 break;
             }
-            else-if(TicTacToe.checkDraw()){
+            else if(TicTacToe.checkDraw()){
                 System.out.println("Game is draw");
                 break;
             }
