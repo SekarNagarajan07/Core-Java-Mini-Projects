@@ -63,7 +63,17 @@ class TicTacToe {
             return false;
         }
     }
+static boolean checkDraw(){
+        for (int i = 0;i<=2;i++){
+            for (int j = 0;j<=2;j++){
+                if(board[i][j] == ' '){
+                    return false;
+                }
+            }
 
+        }
+    return true;
+}
 }
 
 abstract class Player {
@@ -137,7 +147,12 @@ class Game {
             if(TicTacToe.checkColWin() || TicTacToe.checkRowWin() || TicTacToe.checkDiagWin()){
                 System.out.println(cp.name + " has won");
                 break;
-            }else {
+            }
+            else-if(TicTacToe.checkDraw()){
+                System.out.println("Game is draw");
+                break;
+            }
+            else {
                 if(cp==p1){
                     cp = p2;
                 }else {
