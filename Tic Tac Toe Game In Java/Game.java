@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 class TicTacToe {
@@ -65,9 +66,23 @@ class TicTacToe {
 
 }
 
-class HumanPlayer {
+abstract class Player {
     String name;
     char mark;
+    abstract void makeMove();
+
+    boolean isValidMove(int row, int col) {
+        if (row >= 0 && row <= 2 && col >= 0 && col <= 2) {
+            if (TicTacToe.board[row][col] == ' ') {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+class HumanPlayer extends Player{
+
 
     HumanPlayer(String name, char mark) {
         this.name = name;
@@ -85,30 +100,43 @@ class HumanPlayer {
         TicTacToe.placeMark(row, col, mark);
     }
 
-    boolean isValidMove(int row, int col) {
-        if (row >= 0 && row <= 2 && col >= 0 && col <= 2) {
-            if (TicTacToe.board[row][col] == ' ') {
-                return true;
-            }
-        }
-        return false;
+}
+class AIPlayer extends Player{
 
+
+    AIPlayer(String name, char mark) {
+        this.name = name;
+        this.mark = mark;
     }
 
-    class Game {
-        public static void main(String[] args) {
-            TicTacToe t = new TicTacToe();
-           HumanPlayer p1 =  new HumanPlayer("Person1",'X');
-           HumanPlayer p2 = new HumanPlayer("Person2", 'O');
+    void makeMove() {
+        Scanner sc = new Scanner(System.in);
+        int row, col;
+        do {
+        Random r = new Random();
+       row = r.nextInt(3);
+       col = r.nextInt(3);
+        } while (!isValidMove(row, col));
+        TicTacToe.placeMark(row, col, mark);
+    }
 
-           HumanPlayer cp ;
-           cp = p1;
+}
+class Game {
+    public static void main(String[] args) {
+        TicTacToe t = new TicTacToe();
+        HumanPlayer p1 =  new HumanPlayer("Person1",'X');
+        AIPlayer p2 = new AIPlayer("TAI",'O');
 
+        Player cp ;
+        cp = p1;
+
+        while (true){
             System.out.println(cp.name + " turn");
             cp.makeMove();
             TicTacToe.displayBoard();
             if(TicTacToe.checkColWin() || TicTacToe.checkRowWin() || TicTacToe.checkDiagWin()){
                 System.out.println(cp.name + " has won");
+                break;
             }else {
                 if(cp==p1){
                     cp = p2;
@@ -117,5 +145,6 @@ class HumanPlayer {
                 }
             }
         }
+
     }
 }
